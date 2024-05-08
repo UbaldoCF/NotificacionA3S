@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Reporte A3S</title>
+</head>
+
+<body>
+
+  
+    <div style="display: flex; justify-content: center;">
+
+        <table style="width: 1000px;">
+            <thead>
+                <tr>
+                    <th colspan="5"
+                        style=" font-weight: bold; color: black;   border: 1px solid black;  width: 100px; word-wrap: break-word;">
+                        Ejecucion del programa Estados de Agente [[${hrs}]]</th>
+                </tr>
+                <tr style="color: white; background-color: black;">
+                    <th style="  border: 1px solid black;  width: 100px; word-wrap: break-word;">Carpeta</th>
+                    <th style="  border: 1px solid black;  width: 600px; word-wrap: break-word;">Reporte</th>
+                    <th style="  border: 1px solid black;  width: 100px; word-wrap: break-word;">Generado</th>
+                    <th style="  border: 1px solid black;  width: 100px; word-wrap: break-word;">Peso(MB)</th>
+                    <th style="  border: 1px solid black;  width: 100px; word-wrap: break-word;">Subio al SFTP</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="item : ${reportesdetalles}">
+                    <td style="  border: 1px solid black;  width: 100px; word-wrap: break-word;"
+                        th:text="${item.nameFolder}">Folder</td>
+                    <td style="  border: 1px solid black;  width: 600px; word-wrap: break-word;"
+                        th:text="${item.nameReport}">Reporte</td>
+                    <td style="font-weight: bold; border: 1px solid black; width: 100px; word-wrap: break-word;"
+                        th:switch="${item.generate}">
+                        <span th:case="true"
+                            style="color: blue; border: 1px solid black; width: 100px; word-wrap: break-word;">SUCCESS</span>
+                        <span th:case="false"
+                            style="color: red; border: 1px solid black; width: 100px; word-wrap: break-word;">FAIL</span>
+                    </td>
+                    <td style="  border: 1px solid black;  width: 100px; word-wrap: break-word;" th:text="${item.size}">
+                        Peso
+                    </td>
+                    <td style="font-weight: bold; border: 1px solid black; width: 100px; word-wrap: break-word;"
+                        th:switch="${item.sftp}">
+                        <span th:case="true"
+                            style="color: blue; border: 1px solid black; width: 100px; word-wrap: break-word;">SUCCESS</span>
+                        <span th:case="false"
+                            style="color: red; border: 1px solid black; width: 100px; word-wrap: break-word;">FAIL</span>
+                    </td>
+
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+  
+	
+    <div style="display: flex; justify-content: center;">
+        <table style=" width: 1000px;  margin-top: 40px;">
+            <thead>
+                <tr>
+                    <th colspan="5"
+                        style=" font-weight: bold; color: black;  border: 1px solid black;  width: 100px; word-wrap: break-word;">
+                        Ejecucion del programa Inbound [[${hrs}]]</th>
+                </tr>
+                <tr style="color: white; background-color: black;">
+                    <th style="  border: 1px solid black;  width: 100px; word-wrap: break-word;">Carpeta</th>
+                    <th style="  border: 1px solid black;  width: 600px; word-wrap: break-word;">Reporte</th>
+                    <th style="  border: 1px solid black;  width: 100px; word-wrap: break-word;">Generado</th>
+                    <th style="  border: 1px solid black;  width: 100px; word-wrap: break-word;">Peso(MB)</th>
+                    <th style="  border: 1px solid black;  width: 100px; word-wrap: break-word;">Subio al SFTP</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="item : ${inbound}">
+                    <td style="border: 1px solid black; width: 100px; word-wrap: break-word;"
+                        th:text="${item.nameFolder}">
+                        Folder</td>
+                    <td style="border: 1px solid black; width: 600px; word-wrap: break-word;"
+                        th:text="${item.nameReport}">
+                        Reporte</td>
+                    <td style="font-weight: bold; border: 1px solid black; width: 100px; word-wrap: break-word;"
+                        th:switch="${item.generate}">
+                        <span th:case="true"
+                            style="color: blue; border: 1px solid black; width: 100px; word-wrap: break-word;">SUCCESS</span>
+                        <span th:case="false"
+                            style="color: red; border: 1px solid black; width: 100px; word-wrap: break-word;">FAIL</span>
+                    </td>
+                    <td style="border: 1px solid black; width: 100px; word-wrap: break-word;" th:text="${item.size}">
+                        Peso
+                    </td>
+                    <td style="font-weight: bold; border: 1px solid black; width: 100px; word-wrap: break-word;"
+                        th:switch="${item.sftp}">
+                        <span th:case="true"
+                            style="color: blue; border: 1px solid black; width: 100px; word-wrap: break-word;">SUCCESS</span>
+                        <span th:case="false"
+                            style="color: red; border: 1px solid black; width: 100px; word-wrap: break-word;">FAIL</span>
+                    </td>
+                </tr>
+            </tbody>
+
+        </table>
+    </div>
+
+	
+    <div style="display: flex; justify-content: center;">
+        <table style=" width: 1000px;  margin-top: 40px;">
+            <thead>
+                <tr>
+                    <th colspan="5"
+                        style="font-weight: bold; color: black;  border: 1px solid black;  width: 100px; word-wrap: break-word;">
+                        Ejecucion el programa Outbound [[${hrs}]]</th>
+                </tr>
+                <tr style="color: white; background-color: black;">
+                    <th style="  border: 1px solid black;  width: 100px; word-wrap: break-word;">Carpeta</th>
+                    <th style="  border: 1px solid black;  width: 600px; word-wrap: break-word;">Reporte</th>
+                    <th style="  border: 1px solid black;  width: 100px; word-wrap: break-word;">Generado</th>
+                    <th style="  border: 1px solid black;  width: 100px; word-wrap: break-word;">Peso(MB)</th>
+                    <th style="  border: 1px solid black;  width: 100px; word-wrap: break-word;">Subio al SFTP</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="item : ${outbound}">
+                    <td style="border: 1px solid black; width: 100px; word-wrap: break-word;"
+                        th:text="${item.nameFolder}">
+                        Folder</td>
+                    <td style="border: 1px solid black; width: 600px; word-wrap: break-word;"
+                        th:text="${item.nameReport}">
+                        Reporte</td>
+                    <td style="font-weight: bold; border: 1px solid black; width: 100px; word-wrap: break-word;"
+                        th:switch="${item.generate}">
+                        <span th:case="true"
+                            style="color: blue; border: 1px solid black; width: 100px; word-wrap: break-word;">SUCCESS</span>
+                        <span th:case="false"
+                            style="color: red; border: 1px solid black; width: 100px; word-wrap: break-word;">FAIL</span>
+                    </td>
+                    <td style="border: 1px solid black; width: 100px; word-wrap: break-word;" th:text="${item.size}">
+                        Peso
+                    </td>
+                    <td style="font-weight: bold; border: 1px solid black; width: 100px; word-wrap: break-word;"
+                        th:switch="${item.sftp}">
+                        <span th:case="true"
+                            style="color: blue; border: 1px solid black; width: 100px; word-wrap: break-word;">SUCCESS</span>
+                        <span th:case="false"
+                            style="color: red; border: 1px solid black; width: 100px; word-wrap: break-word;">FAIL</span>
+                    </td>
+                </tr>
+            </tbody>
+
+        </table>
+    </div>
+	
+	
+	
+    <div style="display: flex; justify-content: center;">
+        <table style=" width: 1000px;  margin-top: 40px;">
+            <thead>
+                <tr>
+                    <th colspan="5"
+                        style="font-weight: bold; color: black;   border: 1px solid black;  width: 100px; word-wrap: break-word;">
+                        Ejecucion del programa Redes Sociales [[${hrs}]]</th>
+                </tr>
+                <tr style="color: white; background-color: black;">
+                    <th style="  border: 1px solid black;  width: 100px; word-wrap: break-word;">Carpeta</th>
+                    <th style="  border: 1px solid black;  width: 600px; word-wrap: break-word;">Reporte</th>
+                    <th style="  border: 1px solid black;  width: 100px; word-wrap: break-word;">Generado</th>
+                    <th style="  border: 1px solid black;  width: 100px; word-wrap: break-word;">Peso(MB)</th>
+                    <th style="  border: 1px solid black;  width: 100px; word-wrap: break-word;">Subio al SFTP</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="item : ${sociales}">
+                    <td style="border: 1px solid black; width: 100px; word-wrap: break-word;"
+                        th:text="${item.nameFolder}">
+                        Folder</td>
+                    <td style="border: 1px solid black; width: 600px; word-wrap: break-word;"
+                        th:text="${item.nameReport}">
+                        Reporte</td>
+                    <td style="font-weight: bold; border: 1px solid black; width: 100px; word-wrap: break-word;"
+                        th:switch="${item.generate}">
+                        <span th:case="true"
+                            style="color: blue; border: 1px solid black; width: 100px; word-wrap: break-word;">SUCCESS</span>
+                        <span th:case="false"
+                            style="color: red; border: 1px solid black; width: 100px; word-wrap: break-word;">FAIL</span>
+                    </td>
+                    <td style="border: 1px solid black; width: 100px; word-wrap: break-word;" th:text="${item.size}">
+                        Peso
+                    </td>
+                    <td style="font-weight: bold; border: 1px solid black; width: 100px; word-wrap: break-word;"
+                        th:switch="${item.sftp}">
+                        <span th:case="true"
+                            style="color: blue; border: 1px solid black; width: 100px; word-wrap: break-word;">SUCCESS</span>
+                        <span th:case="false"
+                            style="color: red; border: 1px solid black; width: 100px; word-wrap: break-word;">FAIL</span>
+                    </td>
+                </tr>
+            </tbody>
+
+        </table>
+    </div>
+</body>
+
+</html>
