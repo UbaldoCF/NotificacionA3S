@@ -10,6 +10,11 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.stream.StreamSupport;
@@ -107,6 +112,26 @@ public class Utils {
 			log.error("Error al leer el archivo CSV: {}", e.getMessage());
 			return 0;
 		}
+	}
+	
+	public static String getCurrentDayInterval() {
+
+	    ZoneId localZone = ZoneId.of("UTC-6");
+
+	    // Día anterior en zona local
+	    LocalDate yesterday = LocalDate.now(localZone).minusDays(1);
+
+	    ZonedDateTime startLocal = yesterday.atStartOfDay(localZone);
+	    ZonedDateTime endLocal = yesterday.plusDays(1).atStartOfDay(localZone);
+
+	    ZonedDateTime startUtc = startLocal.withZoneSameInstant(ZoneOffset.UTC);
+	    ZonedDateTime endUtc = endLocal.withZoneSameInstant(ZoneOffset.UTC);
+
+	    DateTimeFormatter formatter = DateTimeFormatter
+	            .ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+	            .withZone(ZoneOffset.UTC);
+
+	    return formatter.format(startUtc) + "/" + formatter.format(endUtc);
 	}
 	
 	public static String dateReport() {

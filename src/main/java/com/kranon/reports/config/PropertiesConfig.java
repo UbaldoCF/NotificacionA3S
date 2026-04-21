@@ -37,7 +37,13 @@ public class PropertiesConfig {
 	private List< String> destinationEmailCopyHideReport;
 	
 	private boolean validarSFTP;
-	private boolean checkFileExists;
+	private boolean uploadSFTP;
 			
 	private String vsPathCredencialesAuth;
+
+	private boolean A3SActivateBat;
+	private String A3SConfigName;
+	private List<String> A3SReadPaths;
+	
+
 }

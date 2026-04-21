@@ -13,20 +13,22 @@ import org.springframework.integration.file.remote.session.Session;
 import org.springframework.integration.file.remote.session.SessionFactory;
 import com.jcraft.jsch.ChannelSftp.LsEntry;
 import com.kranon.reports.config.PropertiesConfig;
+import com.kranon.reports.serviceImp.ConexionSFTPServiceImp;
 
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Slf4j
-public class ConexionSFTPService {
+public class ConexionSFTPService implements ConexionSFTPServiceImp {
 
 	@Setter(onMethod = @__(@Autowired))
 	private PropertiesConfig voModel;
 
+	@Override
 	public SftpSession sessionFactory() {
 		try {
-			if (voModel.isValidarSFTP()) {
+		
 				log.info("Conexion por SFTP habilitada");
 				DefaultSftpSessionFactory factory = new DefaultSftpSessionFactory(true);
 				factory.setHost(voModel.getHostSFTP());
@@ -36,9 +38,7 @@ public class ConexionSFTPService {
 				factory.setAllowUnknownKeys(true);
 				log.info("Exito generando conexion por SFTP [conexionSFTP] ");
 				return factory.getSession();
-			}
 
-			return null;
 		} catch (Exception e) {
 			log.error("Error SFTP [conexionSFTP] : " + e.getMessage());
 			return null;
@@ -46,6 +46,7 @@ public class ConexionSFTPService {
 
 	}
 
+	@Override
 	public boolean checkFileExists(String directoryPath, String fileName, Session<LsEntry> session) {
 		try {
 			LsEntry[] files = session.list(directoryPath);
@@ -61,7 +62,8 @@ public class ConexionSFTPService {
 		}
 	}
 
-	// Método para cerrar la sesión al finalizar la aplicación
+	// Método para cerrar la sesion al finalizar la app
+	@Override
 	public void closeSession(Session<LsEntry> sessionFactory) {
 		if (sessionFactory != null && sessionFactory.isOpen()) {
 			sessionFactory.close();
@@ -69,6 +71,7 @@ public class ConexionSFTPService {
 		}
 	}
 
+	@Override
 	public boolean uploadFile(File fileToSend, String remotePath, Session<LsEntry> session) {
 		try (InputStream inputStream = new FileInputStream(fileToSend)) {
 			session.write(inputStream, remotePath + "/" + fileToSend.getName());
